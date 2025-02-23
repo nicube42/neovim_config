@@ -113,6 +113,14 @@ require("lazy").setup({
     vim.keymap.set("n", "<leader>/", "<cmd>lua require('Comment.api').toggle.linewise.current()<CR>", { noremap = true, silent = true })
   end },
 
+  -- 🔗 Auto Pairs & Auto Tags
+  { "windwp/nvim-autopairs", config = function()
+    require("nvim-autopairs").setup({})
+  end },
+  { "windwp/nvim-ts-autotag", config = function()
+    require("nvim-ts-autotag").setup({})
+  end },
+
   -- 🖥️ Terminal Toggle
   { "akinsho/toggleterm.nvim", config = function()
     require("toggleterm").setup({
@@ -123,9 +131,8 @@ require("lazy").setup({
 
   -- 🤖 GitHub Copilot
   { "github/copilot.vim", config = function()
-    vim.g.copilot_enabled = false
+    vim.g.copilot_enabled = true
     vim.api.nvim_set_keymap("n", "<leader>co", ":Copilot enable<CR>", { noremap = true, silent = true })
     vim.api.nvim_set_keymap("n", "<leader>cx", ":Copilot disable<CR>", { noremap = true, silent = true })
   end }
 })
-
