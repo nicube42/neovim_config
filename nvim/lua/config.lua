@@ -66,6 +66,19 @@ require("lazy").setup({
     })
   end },
 
+ -- Open terminal
+{
+  "akinsho/toggleterm.nvim",
+  config = function()
+    require("toggleterm").setup({
+      open_mapping = [[<C-t>]], -- Press Ctrl+T to toggle terminal
+      direction = "float",      -- Terminal in a floating window
+      shade_terminals = true,
+      close_on_exit = true,
+    })
+  end
+},
+
   -- 🔎 Telescope Setup (Search)
   { "nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" }, config = function()
     local builtin = require("telescope.builtin")
