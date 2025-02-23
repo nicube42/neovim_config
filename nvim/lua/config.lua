@@ -12,6 +12,10 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- Enable line numbers
+vim.opt.number = true
+vim.opt.relativenumber = true
+
 -- Install Plugins
 require("lazy").setup({
   -- 🌈 Syntax Highlighting & Treesitter
@@ -101,32 +105,16 @@ require("lazy").setup({
     require("lualine").setup({ options = { theme = "auto" } })
   end },
 
-  -- ✨ UI Enhancements
-  { "psliwka/vim-smoothie" },
-  { "ggandor/leap.nvim", config = function()
-    require("leap").add_default_mappings()
+  -- ✨ Move Lines
+  { "matze/vim-move", config = function()
+    vim.g.move_key_modifier = 'Alt' -- Use Option (Alt) on macOS
   end },
 
-  -- 💬 Commenting
-  { "numToStr/Comment.nvim", config = function()
-    require("Comment").setup()
-    vim.keymap.set("n", "<leader>/", "<cmd>lua require('Comment.api').toggle.linewise.current()<CR>", { noremap = true, silent = true })
-  end },
-
-  -- 🔗 Auto Pairs & Auto Tags
-  { "windwp/nvim-autopairs", config = function()
-    require("nvim-autopairs").setup({})
-  end },
-  { "windwp/nvim-ts-autotag", config = function()
-    require("nvim-ts-autotag").setup({})
-  end },
-
-  -- 🖥️ Terminal Toggle
-  { "akinsho/toggleterm.nvim", config = function()
-    require("toggleterm").setup({
-      open_mapping = [[<C-t>]], -- Press Ctrl + T to toggle
-      direction = "float"
-    })
+  -- 💬 Better Commenting
+  { "terrortylor/nvim-comment", config = function()
+    require("nvim_comment").setup()
+    vim.keymap.set("n", "<leader>7", ":CommentToggle<CR>", { noremap = true, silent = true })
+    vim.keymap.set("v", "<leader>7", ":CommentToggle<CR>", { noremap = true, silent = true }) -- Fix for visual mode
   end },
 
   -- 🤖 GitHub Copilot
@@ -136,3 +124,12 @@ require("lazy").setup({
     vim.api.nvim_set_keymap("n", "<leader>cx", ":Copilot disable<CR>", { noremap = true, silent = true })
   end }
 })
+
+-- 🖥️ Move selected lines up/down & keep them selected
+vim.keymap.set("v", "<leader>j", ":m '>+1<CR>gv", { noremap = true, silent = true }) -- Move down
+vim.keymap.set("v", "<leader>k", ":m '<-2<CR>gv", { noremap = true, silent = true }) -- Move up
+
+-- 🖥️ Move selected lines left/right by one indentation level
+vim.keymap.set("v", "<leader>h", "<gv", { noremap = true, silent = true }) -- Move left (dedent)
+vim.keymap.set("v", "<leader>l", ">gv", { noremap = true, silent = true }) -- Move right (indent)
+
